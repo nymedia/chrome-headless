@@ -4,4 +4,4 @@ USER root
 RUN apk add --update chromium-chromedriver
 EXPOSE 8643
 
-CMD ["chromedriver",  "--port=8643", "--url-base=wd/hub", "--headless"]
+CMD ["chromedriver",  "--port=8643", "--url-base=wd/hub", "--headless", "--no-sandbox"]
