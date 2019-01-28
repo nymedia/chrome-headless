@@ -1,6 +1,7 @@
 # chrome-headless
 
 ![Docker buld status](https://img.shields.io/docker/build/nymediaas/chrome-headless.svg)
+![Docker build automation](https://img.shields.io/docker/automated/nymediaas/chrome-headless.svg)
 
 Docker image to have a headless chrome available via Chromedriver.
 
