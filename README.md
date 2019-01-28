@@ -1,5 +1,7 @@
 # chrome-headless
 
+![Docker buld status](https://img.shields.io/docker/build/nymediaas/chrome-headless.svg)
+
 Docker image to have a headless chrome available via Chromedriver.
 
 This is useful for running behat tests, for example.
