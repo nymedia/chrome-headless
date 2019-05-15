@@ -28,4 +28,4 @@ selenium2:
 
 Remember to set the base_url to an address that this container can reach. 
 
-Or you can use it with `docker-composer` and use the name of your service as the `wd_host`.
+Or you can use it with `docker-compose` and use the name of your service as the `wd_host`.
