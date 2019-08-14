@@ -1,4 +1,4 @@
-FROM zenika/alpine-chrome:latest
+FROM zenika/alpine-chrome:73
 LABEL maintainer="eiriksm <eirik@nymedia.no>"
 USER root
 RUN mkdir -p mkdir /var/cache/apk && apk add --update chromium-chromedriver
