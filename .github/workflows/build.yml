@@ -6,7 +6,7 @@ on:
       # - main
 
 env:
-  REGISTRY: docker.io
+  REGISTRY: ghcr.io
   BUILD_PLATFORMS: linux/amd64,linux/arm64
   IMAGE_NAME: ${{ github.repository }}
 
