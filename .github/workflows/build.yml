@@ -3,9 +3,11 @@ name: Build Docker Container
 on:
   schedule:
     - cron: '0 0 * * 1'
+  pull_request:
   push:
-    branches: ['*']
-      # - main
+    branches:
+      - main
+
 
 env:
   REGISTRY: ghcr.io
