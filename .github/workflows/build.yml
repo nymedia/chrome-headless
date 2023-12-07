@@ -43,14 +43,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=raw,value=${{ matrix.chromium_version }}
-
       - name: Determine base image tag
         id: container-base
         run: |
@@ -71,6 +63,14 @@ jobs:
           fi
 
           echo "tag=${build_tag}" >> $GITHUB_OUTPUT
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=${{ steps.container-base.outputs.tag }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
