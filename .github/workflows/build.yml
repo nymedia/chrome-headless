@@ -15,10 +15,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+         # Ref: https://github.com/Zenika/alpine-chrome
         chromium_version:
-          - '' # latest
+          - 'latest'
           - '89'
-        build_variant: # Ref: https://github.com/Zenika/alpine-chrome
+        build_variant:
           - ''
           - 'with-chromedriver'
     steps:
@@ -46,12 +47,33 @@ jobs:
           tags: |
             type=raw,value=${{ matrix.chromium_version }}
 
+      - name: Determine base image tag
+        id: container-base
+        run: |
+          #
+          # Setup base image tag as follows:
+          # - If the chromium_version is set to "latest" and build_variant is empty: use "latest"
+          # - If the chromium_version is set to "latest" and build_variant is specified: use build_variant
+          # - Otherwise: concatenate chromium_version and build_variant
+          #
+          # Ref: https://github.com/Zenika/alpine-chrome for image naming convention
+          #
+          if [[ "${{ matrix.chromium_version }}" == "latest" && "${{ matrix.build_variant }}" != "" ]]; then
+            build_tag="${{ matrix.build_variant }}"
+          elif [[ "${{ matrix.build_variant }}" == "" ]]; then
+            build_tag="${{ matrix.chromium_version }}"
+          else
+            build_tag="${{ matrix.chromium_version }}-${{ matrix.build_variant }}"
+          fi
+
+          echo "tag=${build_tag}" >> $GITHUB_OUTPUT
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           build-args: |
-            BASE_IMAGE_TAG=${{ matrix.chromium_version }}${{ matrix.chromium_version && matrix.build_variant && '-' }}${{ matrix.build_variant }}
+            BASE_IMAGE_TAG=${{ steps.container-base.outputs.tag }}
           platforms: ${{ env.BUILD_PLATFORMS }}
           push: ${{ github.event_name == 'push' && github.ref_name == 'main' }}
           tags: ${{ steps.meta.outputs.tags }}
