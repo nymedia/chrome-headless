@@ -1,7 +1,8 @@
-FROM zenika/alpine-chrome:73
-LABEL maintainer="eiriksm <eirik@nymedia.no>"
-USER root
-RUN mkdir -p mkdir /var/cache/apk && apk add --update chromium-chromedriver
-ENTRYPOINT ["chromedriver",  "--port=8643", "--url-base=wd/hub", "--headless", "--no-sandbox", "--whitelisted-ips="]
-EXPOSE 8643
+ARG BASE_IMAGE_TAG=latest
+FROM zenika/alpine-chrome:${BASE_IMAGE_TAG}
 
+LABEL maintainer="eiriksm <eirik@nymedia.no>"
+LABEL description="Chrome driver for selenium testing"
+
+EXPOSE 8643
+ENTRYPOINT ["chromedriver", "--allowed-ips=","--allowed-origins=*", "--port=8643", "--url-base=wd/hub", "--headless", "--no-sandbox", "--whitelisted-ips="]
