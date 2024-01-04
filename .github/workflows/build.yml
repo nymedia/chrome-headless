@@ -22,7 +22,7 @@ jobs:
          # Ref: https://github.com/Zenika/alpine-chrome
         chromium_version:
           - 'latest'
-          - '89'
+          - '119'
         build_variant:
           - ''
           - 'with-chromedriver'
