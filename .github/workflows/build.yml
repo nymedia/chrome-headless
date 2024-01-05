@@ -23,6 +23,7 @@ jobs:
         chromium_version:
           - 'latest'
           - '89'
+          - '119'
         build_variant:
           - ''
           - 'with-chromedriver'
